@@ -1,41 +1,31 @@
-const current = getProperty(actor.data.data, 'resources.fourth.value'); //TO DO change from resources to tracking in inventory
-const ammoDice = new Roll(`1d${current}`);
-await ammoDice.roll();
+const itemId = 'ammoitemid'; //place item id here
+const item = actor.items.get(itemId);
 
-ammoDice.toMessage({
-    flavor: "Ammunition Die (Gun Powder)",
-});
+if (item) {
+    const quantity = item.data.data.quantity;
+    
+    const ammoDice = new Roll(`1d${quantity}`);
+    await ammoDice.roll();
 
-let nextValue = current;
+    ammoDice.toMessage({
+        flavor: `Ammunition Die : ${item.name}`,
+    })
 
-if (ammoDice.total <= 2) {
-    switch (current) {
-        case 20:
-            nextValue = 12;
-            break;
-        case 12:
-            nextValue = 10;
-            break;
-        case 10:
-            nextValue = 8;
-            break;
-        case 8:
-            nextValue = 6;
-            break;
-        case 6:
-            nextValue = 4;
-            break;
-        case 4:
-            nextValue = 1;
-            break;
-        case 1:
-            nextValue = 0;
-            break;
-        default:
-            nextValue = 0;
+    let nextValue = quantity;
+
+    const ammoDiceValues = [20, 12, 10, 8, 6, 4, 1, 0];
+
+    if (ammoDice.total <= 2 && ammoDiceValues.includes(quantity)) {
+        const currentIndex = ammoDiceValues.indexOf(quantity);
+        nextValue = ammoDiceValues[currentIndex + 1];
     }
+    
+    await item.update({ 'data.quantity': nextValue });
+    ChatMessage.create({ content: `Current ${item.name}'s ammo dice: ${getQuantityDisplay(nextValue)}` });
+} else {
+    ChatMessage.create({ content: "Ammunition not found" });
 }
 
-await actor.update({
-    "data.resources.fourth.value": nextValue
-});
+function getQuantityDisplay(quantity) {
+    return quantity > 1 ? `d${quantity}` : quantity.toString();
+}

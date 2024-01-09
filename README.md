@@ -9,7 +9,5 @@ Feel free to suggest and open issues (I'll do my best).
     - Dice Steps : D20 > D10 > D8 > D6 > D4 > 1 > 0
 
 ## To do list
-- Ammo Dice
-    - Plan to track ammo in inventory. Currently, I've decided to track them in attributes.
 - Magical Burnout
     - adjust hitdice, hp
