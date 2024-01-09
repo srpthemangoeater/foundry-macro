@@ -12,4 +12,4 @@ Feel free to suggest and open issues (I'll do my best).
 - Ammo Dice
     - Plan to track ammo in inventory. Currently, I've decided to track them in attributes.
 - Magical Burnout
-    - There are some issues. Waiting for my friend to tell me more about the problem they discovered.
+    - adjust hitdice, hp

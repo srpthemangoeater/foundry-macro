@@ -8,13 +8,13 @@ burnoutDice.toMessage({ flavor: "Magical burnout" });
 // 16-40	Shocked: Lose (spell level x 4) hit points.
 // 41-88	Hurt: Lose (spell level x 2) hit points.
 // 89-93	Blackout: You have disadvantage when casting spells for (spell level) rounds.
-// 94	Immolated: Shrink the burnout die to d4.
-// 95	Gifted: Regain this spell slot.
-// 96	Renewed: Regain (spell level) hit dice.
-// 97	Healed: Gain (spell level x 4) hit points.
-// 98	Protected: Gain (spell level x 4) temporary hit points.
-// 99	Energized: You have advantage when casting spells for (spell level) rounds.
-// 100	Restored: Reset the burnout die to d12.
+// 94	    Immolated: Shrink the burnout die to d4.
+// 95	    Gifted: Regain this spell slot.
+// 96	    Renewed: Regain (spell level) hit dice.
+// 97	    Healed: Gain (spell level x 4) hit points.
+// 98	    Protected: Gain (spell level x 4) temporary hit points.
+// 99	    Energized: You have advantage when casting spells for (spell level) rounds.
+// 100	    Restored: Reset the burnout die to d12.
 
 if (burnoutDice.total <= 2) {
     const botable = [
@@ -38,12 +38,17 @@ if (burnoutDice.total <= 2) {
 
     let cr2 = 0;
     if (r2.total === 100) cr2 = 12;
-    else if (r2.total >= 95) cr2 = 11 - (100 - r2.total);
     else if (r2.total <= 5) cr2 = 1;
     else if (r2.total <= 15) cr2 = 2;
     else if (r2.total <= 40) cr2 = 3;
     else if (r2.total <= 88) cr2 = 4;
     else if (r2.total <= 93) cr2 = 5;
+    else if (r2.total == 94) cr2 = 6;
+    else if (r2.total == 95) cr2 = 7;
+    else if (r2.total == 96) cr2 = 8;
+    else if (r2.total == 97) cr2 = 9;
+    else if (r2.total == 98) cr2 = 10;
+    else if (r2.total == 99) cr2 = 11;
 
     let l_current = current;
     if (current > 4 && cr2 !== 6 && cr2 !== 12) l_current -= 2;
